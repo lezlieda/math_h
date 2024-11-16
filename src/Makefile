@@ -1,5 +1,6 @@
 CC = gcc 
 FLAG_ER = -Wall -Werror -Wextra -g -std=c11
+FLAG_LIBS = -lcheck -lm -lsubunit
 S21_MATH_C = functions/s21*.c
 S21_MATH_O = s21*.o
 S21_SUITE_C = suite_tests/suite_s21*.c
@@ -17,13 +18,13 @@ s21_math.a: $(S21_MATH_C)
 
 test: s21_math.a
 	$(CC) $(FLAG_ER) -c $(S21_SUITE_C) main.c
-	$(CC) $(FLAG_ER) -o test $(S21_SUITE_O) main.o s21_math.a -lcheck
+	$(CC) $(FLAG_ER) -o test $(S21_SUITE_O) main.o s21_math.a $(FLAG_LIBS)
 	rm -rf *.o *.a
 	./test
 
 valgrind: s21_math.a
 	$(CC) $(FLAG_ER) -c $(S21_SUITE_C) main.c
-	$(CC) $(FLAG_ER) -o test $(S21_SUITE_O) main.o s21_math.a -lm -lcheck -lsubunit
+	$(CC) $(FLAG_ER) -o test $(S21_SUITE_O) main.o s21_math.a $(FLAG_LIBS)
 	rm -rf *.o *.a
 	./test
 
@@ -33,7 +34,7 @@ gcov_report:
 	rm -rf *.o
 	ranlib s21_math.a
 	$(CC) $(FLAG_ER) -c $(S21_SUITE_C) main.c
-	$(CC) $(FLAG_ER) --coverage -o test $(S21_SUITE_O) main.o s21_math.a -lm -lcheck
+	$(CC) $(FLAG_ER) --coverage -o test $(S21_SUITE_O) main.o s21_math.a $(FLAG_LIBS)
 	./test
 	# gcov s21*.gcda
 	gcovr --html-details -o report.html
