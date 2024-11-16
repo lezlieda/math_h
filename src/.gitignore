@@ -1,0 +1,13 @@
+test
+test/.gitignore
+suite_tests/s21_ass.c
+*.o
+*.out
+*.exe
+*.a
+*.so
+*.gcno
+*.gcda
+*.gcov
+*.html
+*.css
